@@ -1,27 +1,29 @@
-# ember-service-worker-race
+# Ember Service Worker Race
 
-This README outlines the details of collaborating on this Ember addon.
+**WARNING: This is not a production ready addon yet, once it is I will remove
+this warning**
+
+_An Ember Service Worker plugin that races between cache and network and
+returns the first one to resolve_
 
 ## Installation
 
-* `git clone <repository-url>` this repository
-* `cd ember-service-worker-race`
-* `npm install`
-* `bower install`
+```
+ember install ember-service-worker-race
+```
 
-## Running
+## Authors
 
-* `ember serve`
-* Visit your app at [http://localhost:4200](http://localhost:4200).
+* [Federico Kauffman](http://github.com/fedekau)
 
-## Running Tests
+## Versioning
 
-* `npm test` (Runs `ember try:each` to test your addon against multiple Ember versions)
-* `ember test`
-* `ember test --server`
+This library follows [Semantic Versioning](http://semver.org)
 
-## Building
+## Inspiration
+  * [The offline cookbook](https://jakearchibald.com/2014/offline-cookbook/)
+  * [Supercharged: Live Coding Session (Chrome Dev Summit 2016)](https://www.youtube.com/watch?v=X8EQSy-ajo4)
 
-* `ember build`
+## License
 
-For more information on using ember-cli, visit [https://ember-cli.com/](https://ember-cli.com/).
+[Licensed under the MIT license](http://www.opensource.org/licenses/mit-license.php)
