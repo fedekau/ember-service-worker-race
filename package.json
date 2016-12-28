@@ -1,18 +1,18 @@
 {
   "name": "ember-service-worker-race",
   "version": "0.0.0",
-  "description": "The default blueprint for ember-cli addons.",
+  "description": "Plugin for ember-service-worker implementing the race serving pattern",
   "keywords": [
     "ember-addon",
     "ember-service-worker-plugin"
   ],
   "license": "MIT",
-  "author": "",
+  "author": "Federico Kauffman",
   "directories": {
     "doc": "doc",
     "test": "tests"
   },
-  "repository": "",
+  "repository": "https://github.com/fedekau/ember-service-worker-race",
   "scripts": {
     "build": "ember build",
     "start": "ember server",
