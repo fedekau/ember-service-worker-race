@@ -1,6 +1,6 @@
 {
   "name": "ember-service-worker-race",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "description": "Plugin for ember-service-worker implementing the race serving pattern",
   "keywords": [
     "ember-addon",
