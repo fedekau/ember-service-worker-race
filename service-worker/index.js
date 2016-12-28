@@ -21,7 +21,6 @@ function updateCache(fetchPromise, event) {
     try {
       fetchPromise.then((response) => {
         caches.open(CACHE_NAME).then((cache) => {
-          console.log('Cache was updated', event.request, response);
           cache.put(event.request, response);
           resolve();
         });
