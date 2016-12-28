@@ -1,10 +1,11 @@
 # Ember Service Worker Race
 
-**WARNING: This is not a production ready addon yet, once it is I will remove
-this warning**
+**WARNING: Test this in your local/staging environment before using it in
+production**
 
 _An Ember Service Worker plugin that races between cache and network and
-returns the first one to resolve_
+returns the first one to resolve, also when the fetch resolves it
+updates the cache._
 
 ## Installation
 
