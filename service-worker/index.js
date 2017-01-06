@@ -6,7 +6,7 @@ const CACHE_NAME = `${CACHE_KEY_PREFIX}${PROJECT_REVISION}`;
 function invertPromise(promise) {
   return new Promise(
     (resolve, reject) =>
-      promise.then(reject, resolve)
+    promise.then(reject, resolve)
   );
 }
 
@@ -16,12 +16,16 @@ function raceToSuccess(promises) {
       promises.map(invertPromise)));
 }
 
-function updateCache(fetchPromise, event) {
+function isCacheable(request) {
+  return request.method === 'GET';
+}
+
+function updateCache(fetchPromise, request) {
   return new Promise((resolve, reject) => {
     try {
       fetchPromise.then((response) => {
         caches.open(CACHE_NAME).then((cache) => {
-          cache.put(event.request, response);
+          cache.put(request, response);
           resolve();
         });
       });
@@ -29,23 +33,33 @@ function updateCache(fetchPromise, event) {
   });
 }
 
+function tryCacheUpdate(fetchPromise, event) {
+  let request = event.request;
+
+  if (isCacheable(request)) {
+    return updateCache(fetchPromise, request);
+  } else {
+    return Promise.resolve();
+  }
+}
+
 function fetchCacheRace(fetchedVersion, cachedVersion) {
   return new Promise((resolve, reject) => {
-      try {
-        raceToSuccess([ cachedVersion, fetchedVersion.catch(_ => cachedVersion) ]).then((response) => {
-          if (!response) {
-            fetchedVersion.then((r) => {
-              return resolve(r);
-            });
-          } else {
-            return resolve(response);
-          }
-        });
+    try {
+      raceToSuccess([ cachedVersion, fetchedVersion.catch(_ => cachedVersion) ]).then((response) => {
+        if (!response) {
+          fetchedVersion.then((r) => {
+            return resolve(r);
+          });
+        } else {
+          return resolve(response);
+        }
+      });
 
-      } catch(_) {
-        return reject(new Response(null, {status: 404}));
-      }
-    });
+    } catch(_) {
+      return reject(new Response(null, {status: 404}));
+    }
+  });
 }
 
 addFetchListener(function(event) {
@@ -53,7 +67,7 @@ addFetchListener(function(event) {
   const fetchedVersion = fetch(event.request);
   const fetchedVersionCopy = fetchedVersion.then(response => response.clone());
 
-  event.waitUntil(updateCache(fetchedVersionCopy, event));
+  event.waitUntil(tryCacheUpdate(fetchedVersionCopy, event));
 
   return fetchCacheRace(fetchedVersion, cachedVersion);
 });
