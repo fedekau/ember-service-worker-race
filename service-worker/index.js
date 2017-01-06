@@ -15,9 +15,9 @@ function raceToSuccess(promises) {
     Promise.all(
       promises.map(invertPromise)));
 }
-
 function isCacheable(request) {
-  return request.method === 'GET';
+  let httpRegex = /https?/;
+  return request.method === 'GET' && httpRegex.test(request.url);
 }
 
 function updateCache(fetchPromise, request) {
