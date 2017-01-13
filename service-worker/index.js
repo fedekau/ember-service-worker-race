@@ -72,3 +72,14 @@ addFetchListener(function(event) {
   return fetchCacheRace(fetchedVersion, cachedVersion);
 });
 
+self.addEventListener('activate', function(event) {
+  event.waitUntil(
+    caches.keys().then(function(cacheNames) {
+      cacheNames.forEach(function(cacheName) {
+        if (cacheName.indexOf(CACHE_KEY_PREFIX) === 0 && cacheName !== CACHE_NAME) {
+          caches.delete(cacheName);
+        }
+      });
+    })
+  );
+});
